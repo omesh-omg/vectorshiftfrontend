@@ -22,7 +22,6 @@ const selector = (state) => ({
 
 const sourceHandleConfigInputNode = [
     { position: Position.Right, id: 'output' },
-    { position: Position.Right, id: 'output2' },
 ];
 
 const targetHandleConfigOutputNode = [

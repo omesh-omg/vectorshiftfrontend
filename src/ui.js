@@ -5,7 +5,7 @@ import { useStore } from './store';
 import { shallow } from 'zustand/shallow';
 import NodeTemplate from './nodes/NodeTemplate';
 import nodeTypes from './nodeTypes';
-import { Box, Tabs, Tab, IconButton } from '@mui/material';
+import { Box, Tabs, Tab, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import 'reactflow/dist/style.css';
 
@@ -41,6 +41,9 @@ export const PipelineUI = () => {
     onConnect
   } = useStore(selector, shallow);
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [newFlowName, setNewFlowName] = useState('');
+
   useEffect(() => {
     if (Object.keys(flows).length === 0) {
       const newFlowId = `flow-${Date.now()}`;
@@ -49,9 +52,8 @@ export const PipelineUI = () => {
   }, [flows, createFlow]);
 
   const getInitNodeData = (nodeID, type) => {
-    let nodeData = { id: nodeID, nodeType: `${type}` };
-    return nodeData;
-  }
+    return { id: nodeID, nodeType: `${type}` };
+  };
 
   const onDrop = useCallback(
     (event) => {
@@ -83,7 +85,7 @@ export const PipelineUI = () => {
         addNode(newNode);
       }
     },
-    [reactFlowInstance]
+    [reactFlowInstance, getNodeID, addNode]
   );
 
   const onDragOver = useCallback((event) => {
@@ -91,18 +93,31 @@ export const PipelineUI = () => {
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
-  // Handle tab change
   const handleTabChange = (event, newValue) => {
     setCurrentFlow(newValue);
   };
 
-  // Handle adding a new flow
   const handleAddFlow = () => {
-    const newFlowId = `flow-${Date.now()}`;
-    createFlow(newFlowId, `Flow ${Object.keys(flows).length + 1}`);
+    setDialogOpen(true);
   };
 
-  // Handle removing a flow
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleFlowNameChange = (event) => {
+    setNewFlowName(event.target.value);
+  };
+
+  const handleCreateFlow = () => {
+    if (newFlowName.trim()) {
+      const newFlowId = `flow-${Date.now()}`;
+      createFlow(newFlowId, newFlowName);
+      setNewFlowName('');
+      setDialogOpen(false);
+    }
+  };
+
   const handleRemoveFlow = (flowId) => {
     if (Object.keys(flows).length > 1) {
       removeFlow(flowId);
@@ -116,12 +131,13 @@ export const PipelineUI = () => {
           {Object.entries(flows).map(([flowId, flow]) => (
             <Tab key={flowId} label={flow.name} value={flowId} />
           ))}
+          <IconButton
+            onClick={handleAddFlow}
+            sx={{ width:50 }}
+          >
+            <AddIcon />
+          </IconButton>
         </Tabs>
-        <IconButton onClick={handleAddFlow} 
-        sx={{ position: 'absolute', right: 0, top: 0 }}
-        >
-          <AddIcon />
-        </IconButton>
       </Box>
       {currentFlow && (
         <Box ref={reactFlowWrapper} sx={{ width: '100%', height: '75vh', backgroundColor: "#fff" }}>
@@ -145,6 +161,26 @@ export const PipelineUI = () => {
           </ReactFlow>
         </Box>
       )}
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogTitle>Create New Pipeline Flow</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="flowName"
+            label="Flow Name"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={newFlowName}
+            onChange={handleFlowNameChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>Cancel</Button>
+          <Button onClick={handleCreateFlow}>Create</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

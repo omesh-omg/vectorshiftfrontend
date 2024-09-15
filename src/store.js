@@ -23,7 +23,7 @@ const loadInitialState = () => {
   return {
     flows: {
       [initialFlowId]: {
-        name: 'Flow 1',
+        name: 'Your Pipeline Flow',
         nodes: [],
         edges: [],
       },

@@ -177,8 +177,8 @@ export const PipelineUI = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handleCreateFlow}>Create</Button>
+          <Button variant= "outlined" onClick={handleDialogClose}>Cancel</Button>
+          <Button variant= "contained" style={{backgroundColor: '#1B2845', color:"white"}} onClick={handleCreateFlow}>Create</Button>
         </DialogActions>
       </Dialog>
     </Box>

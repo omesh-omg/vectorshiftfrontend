@@ -5,22 +5,20 @@
 import { useState, useRef, useCallback } from 'react';
 import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
 import { useStore } from './store';
+// import DevTools from './DevTools';
 import { shallow } from 'zustand/shallow';
-import { InputNode } from './nodes/inputNode';
-import { LLMNode } from './nodes/llmNode';
-import { OutputNode } from './nodes/outputNode';
-import { TextNode } from './nodes/textNode';
+import NodeTemplate from './nodes/NodeTemplate';
+import nodeTypes,{addNodeType} from './nodeTypes';
+import { InputNode, OutputNode, TextNode, LLMNode } from './nodes/Node';
+// import { InputNode } from './nodes/inputNode';
+// import { LLMNode } from './nodes/llmNode';
+// import { OutputNode } from './nodes/outputNode';
+// import { TextNode } from './nodes/textNode';
 
 import 'reactflow/dist/style.css';
 
 const gridSize = 20;
 const proOptions = { hideAttribution: true };
-const nodeTypes = {
-  customInput: InputNode,
-  llm: LLMNode,
-  customOutput: OutputNode,
-  text: TextNode,
-};
 
 const selector = (state) => ({
   nodes: state.nodes,
@@ -50,6 +48,11 @@ export const PipelineUI = () => {
       return nodeData;
     }
 
+    // const onElementsRemove = useCallback(
+    //   (elementsToRemove) => setNodes((els) => removeElements(elementsToRemove, els)),
+    //   [setNodes]
+    // );
+
     const onDrop = useCallback(
         (event) => {
           event.preventDefault();
@@ -58,7 +61,7 @@ export const PipelineUI = () => {
           if (event?.dataTransfer?.getData('application/reactflow')) {
             const appData = JSON.parse(event.dataTransfer.getData('application/reactflow'));
             const type = appData?.nodeType;
-      
+            console.log("nodetype",type)
             // check if the dropped element is valid
             if (typeof type === 'undefined' || !type) {
               return;
@@ -82,7 +85,6 @@ export const PipelineUI = () => {
         },
         [reactFlowInstance]
     );
-
     const onDragOver = useCallback((event) => {
         event.preventDefault();
         event.dataTransfer.dropEffect = 'move';
@@ -90,7 +92,7 @@ export const PipelineUI = () => {
 
     return (
         <>
-        <div ref={reactFlowWrapper} style={{width: '100wv', height: '70vh'}}>
+        <div ref={reactFlowWrapper} style={{width: '100wv', height: '70vh', backgroundColor:"#fff"}}>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -103,11 +105,14 @@ export const PipelineUI = () => {
                 nodeTypes={nodeTypes}
                 proOptions={proOptions}
                 snapGrid={[gridSize, gridSize]}
+                // onElementsRemove={onElementsRemove}
                 connectionLineType='smoothstep'
+                // deleteKeyCode={46}
             >
                 <Background color="#aaa" gap={gridSize} />
                 <Controls />
                 <MiniMap />
+                {/* <DevTools /> */}
             </ReactFlow>
         </div>
         </>

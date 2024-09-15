@@ -7,6 +7,7 @@ import NodeTemplate from './nodes/NodeTemplate';
 import nodeTypes from './nodeTypes';
 import { Box, Tabs, Tab, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import 'reactflow/dist/style.css';
 
 const gridSize = 20;
@@ -129,7 +130,18 @@ export const PipelineUI = () => {
       <Box sx={{ borderBottom: 1, borderColor: 'divider', position: 'relative' }}>
         <Tabs value={currentFlow} onChange={handleTabChange} aria-label="react-flow tabs">
           {Object.entries(flows).map(([flowId, flow]) => (
-            <Tab key={flowId} label={flow.name} value={flowId} />
+            <Tab
+            key={flowId}
+            label={
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                {flow.name}
+                <IconButton size="small" onClick={() => handleRemoveFlow(flowId)} sx={{ ml: 1 }}>
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </Box>
+            }
+            value={flowId}
+          />
           ))}
           <IconButton
             onClick={handleAddFlow}

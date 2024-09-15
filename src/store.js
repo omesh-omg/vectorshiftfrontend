@@ -88,6 +88,12 @@ export const useStore = create((set, get) => {
         return newState;
       });
     },
+    onRemoveNode: (nodeId) => set((state) => {
+      const currentFlow = state.flows[state.currentFlow];
+      const updatedNodes = currentFlow.nodes.filter((node) => node.id !== nodeId);
+      const updatedFlow = { ...currentFlow, nodes: updatedNodes };
+      return { flows: { ...state.flows, [state.currentFlow]: updatedFlow } };
+    }),
     getNodeID: (type) => {
       const newIDs = { ...get().nodeIDs };
       if (newIDs[type] === undefined) {

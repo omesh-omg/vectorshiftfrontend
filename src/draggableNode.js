@@ -20,6 +20,7 @@ export const DraggableNode = ({ type, label,icon }) => {
     event.dataTransfer.setData('application/reactflow', JSON.stringify(appData));
     event.dataTransfer.effectAllowed = 'move';
   };
+  console.log(selectedIcon,"selectedicondragg")
 
   return (
     <div

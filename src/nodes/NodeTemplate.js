@@ -7,6 +7,16 @@ import { Card, CardContent, TextField, MenuItem, IconButton, Typography, Box } f
 import { shallow } from 'zustand/shallow';
 import "./NodeTemplate.css";
 import { height, width } from '@fortawesome/free-solid-svg-icons/fa0';
+import { faRightToBracket, faChartBar, faRightFromBracket, faFileLines } from '@fortawesome/free-solid-svg-icons';
+
+
+const iconMapping = {
+  'right-to-bracket': faRightToBracket,
+  'chart-bar': faChartBar,
+  'right-from-bracket': faRightFromBracket,
+  'file-line': faFileLines
+};
+
 
 const selector = (state) => ({
     nodes: state.nodes,
@@ -57,6 +67,8 @@ const NodeTemplate = ({
         }, {})
     );
 
+    const selectedIcon= iconMapping[icon];
+
     const handleInputChange = (e, name) => {
         setInputValues({
             ...inputValues,
@@ -66,7 +78,7 @@ const NodeTemplate = ({
 
     const sourceHandlesWithStyles = generateHandleStyles(sourceHandles, Position.Right);
     const targetHandlesWithStyles = generateHandleStyles(targetHandles, Position.Left);
-
+    console.log(selectedIcon,"selectedicon");
     return (
         <Card
             sx={{
@@ -88,9 +100,12 @@ const NodeTemplate = ({
               onDragStart={(e) => e.target.style.cursor = 'grabbing'}
               onDragEnd={(e) => e.target.style.cursor = 'grab'}
               >
+                
                 <Typography variant="h6"  sx={{ color: '#1b2845',letterSpacing:"0.15rem", fontWeight: "800"  }}>
+                <FontAwesomeIcon icon={selectedIcon} style={{ color: '#1b2845', marginRight: '10px' }} />                 
                     {heading}
                 </Typography>
+                
                 <IconButton
                     sx={{ color: '#1b2845' }}
                     onClick={() => onRemoveNode(id)}

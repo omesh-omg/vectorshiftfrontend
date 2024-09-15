@@ -39,6 +39,8 @@ const targetHandleConfigLLMNode = [
 const inputFieldConfigLLMNode = [
     { name: 'inputSystem', label: 'System', type: 'text' },
     { name: 'inputPrompt', label: 'Prompt', type: 'text', options: ['Text', 'File'] },
+    { name: 'model', label: 'Model', type: 'select', options: ['GPTo', 'GPT_3.5', 'GPT_4' ] },
+
 ];
 
 const inputFieldConfig = [
@@ -55,6 +57,7 @@ export const InputNode = (props) => (
         subheading="Handles user input"
         description="This node captures user input."
         {...props}
+        icon="right-to-bracket"
     />
 );
 
@@ -68,6 +71,7 @@ export const OutputNode = (props) => (
         subheading="Displays output"
         description="This node displays the output."
         {...props}
+        icon="right-from-bracket"
     />
 );
 // export const InputNode = (props) => <NodeTemplate type="Input" {...props} />;
@@ -82,6 +86,7 @@ export const LLMNode = (props) => (
         subheading="ChatGpt 40"
         heading="LLM"
         {...props}
+        icon="chart-bar"
     />
 );
 
@@ -147,6 +152,7 @@ export const TextNode = (props) => {
                 ...handles,
             ]}
             style={{ width: nodeDimensions.width, height: nodeDimensions.height }}
+            icon="file-line"
         >
             <TextareaAutosize
                 value={text}

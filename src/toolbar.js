@@ -5,7 +5,7 @@ import { DraggableNode } from './draggableNode';
 export const PipelineToolbar = () => {
 
     return (
-        <div style={{ padding: '10px' }}>
+        <div style={{ padding: '10px' ,boxShadow:"5px 5px 5px #F4F4F5", marginBottom:"8px"}}>
             <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                 <DraggableNode type='customInput' label='Input' icon='right-to-bracket' />
                 <DraggableNode type='llm' label='LLM' icon='chart-bar'/>

@@ -36,6 +36,10 @@ const targetHandleConfigLLMNode = [
     { position: Position.Left, id: 'input1' },
     { position: Position.Left, id: 'input2' },
 ];
+const inputFieldConfigLLMNode = [
+    { name: 'inputSystem', label: 'System', type: 'text' },
+    { name: 'inputPrompt', label: 'Prompt', type: 'text', options: ['Text', 'File'] },
+];
 
 const inputFieldConfig = [
     { name: 'inputName', label: 'Name', type: 'text' },
@@ -73,6 +77,7 @@ export const LLMNode = (props) => (
     <NodeTemplate
         sourceHandles={sourceHandleConfigLLMNode}
         targetHandles={targetHandleConfigLLMNode}
+        inputFields={inputFieldConfigLLMNode}
         description="This is a LLM."
         subheading="ChatGpt 40"
         heading="LLM"
@@ -103,18 +108,6 @@ export const TextNode = (props) => {
     const [handles, setHandles] = useState([]);
     const [nodeDimensions, setNodeDimensions] = useState({ width: 200, height: 80 });
 
-    // Update node dimensions based on text content
-    useEffect(() => {
-        const calculateDimensions = () => {
-            const lines = text.split('\n').length;
-            const width = Math.min(200, text.length * 10);
-            const height = Math.max(80, lines * 20 + 40);
-
-            setNodeDimensions({ width, height });
-        };
-
-        calculateDimensions();
-    }, [text]);
 
     // Extract variables from text and update handles
     useEffect(() => {

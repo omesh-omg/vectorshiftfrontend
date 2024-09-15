@@ -1,4 +1,4 @@
-/* NodeTemplate.css */
+NodeTemplate.css
 .node-template {
     border: 1px solid #000;
     padding: 10px;
@@ -10,3 +10,40 @@
     margin-bottom: 10px;
   }
   
+
+.custom-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.custom-dropdown select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.custom-dropdown::after {
+  content: '▼';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.custom-dropdown select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.custom-dropdown select:hover {
+  border-color: #007bff;
+}

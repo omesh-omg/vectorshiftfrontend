@@ -5,16 +5,10 @@
 import { useState, useRef, useCallback } from 'react';
 import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
 import { useStore } from './store';
-// import DevTools from './DevTools';
 import { shallow } from 'zustand/shallow';
 import NodeTemplate from './nodes/NodeTemplate';
 import nodeTypes,{addNodeType} from './nodeTypes';
 import { InputNode, OutputNode, TextNode, LLMNode } from './nodes/Node';
-// import { InputNode } from './nodes/inputNode';
-// import { LLMNode } from './nodes/llmNode';
-// import { OutputNode } from './nodes/outputNode';
-// import { TextNode } from './nodes/textNode';
-
 import 'reactflow/dist/style.css';
 
 const gridSize = 20;

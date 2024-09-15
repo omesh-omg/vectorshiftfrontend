@@ -76,6 +76,7 @@ export const PipelineUI = () => {
             const newNode = {
               id: nodeID,
               type,
+              dragHandle: '.custom-drag-handle',
               position,
               data: getInitNodeData(nodeID, type),
             };

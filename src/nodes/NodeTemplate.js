@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Card, CardContent, TextField, MenuItem, IconButton, Typography, Box } from '@mui/material';
 import { shallow } from 'zustand/shallow';
+import "./NodeTemplate.css";
+import { height, width } from '@fortawesome/free-solid-svg-icons/fa0';
 
 const selector = (state) => ({
     nodes: state.nodes,
@@ -21,7 +23,7 @@ const generateHandleStyles = (handles, position) => {
     const step = 100 / (handles.length + 1);
     return handles.map((handle, index) => ({
         ...handle,
-        style: { top: `${(index + 1) * step}%` }
+        style: { top: `${(index + 1) * step}%`}
     }));
 };
 
@@ -73,19 +75,24 @@ const NodeTemplate = ({
                 boxShadow: 3,
                 padding: 2,
                 position: 'relative',
-                backgroundColor: '#f5f5f5',
-                overflow: 'visible'
+                // backgroundColor: '#fffff',
+                overflow: 'visible',
+
+
             }}
-            draggable
-            onDragStart={(e) => e.target.style.cursor = 'grabbing'}
-            onDragEnd={(e) => e.target.style.cursor = 'grab'}
+            className='custom-drag-handle'
+            
+            
         >
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                <Typography variant="h6"  sx={{ color: '#1976d2' }}>
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={1} className="custom-drag-handle" 
+              onDragStart={(e) => e.target.style.cursor = 'grabbing'}
+              onDragEnd={(e) => e.target.style.cursor = 'grab'}
+              >
+                <Typography variant="h6"  sx={{ color: '#1b2845',letterSpacing:"0.15rem", fontWeight: "800"  }}>
                     {heading}
                 </Typography>
                 <IconButton
-                    sx={{ color: '#ff9912' }}
+                    sx={{ color: '#1b2845' }}
                     onClick={() => onRemoveNode(id)}
                 >
                     <FontAwesomeIcon icon={faTimes} />
@@ -107,7 +114,7 @@ const NodeTemplate = ({
                         <Typography variant="body2">{field.label}:</Typography>
                         {field.type === 'select' ? (
                             <select 
-                            style={{width:"100%", height:"48px" , fontSize:"16px"}}
+                            style={{width:"100%", height:"48px" , fontSize:"16px", backgroundColor:"#ffffff", border:"1px #999999 solid", borderRadius:"4px"}}
                             className="node-template-select"
                             value={inputValues[field.name]} 
                             onChange={(e) => handleInputChange(e, field.name)}
@@ -136,6 +143,7 @@ const NodeTemplate = ({
                     nodeId={id}
                     position={handle.position}
                     id={`${id}-${handle.id}`}
+                    className='handle right'
                     style={sourceHandlesWithStyles[index].style}
                 />
             ))}
@@ -145,6 +153,7 @@ const NodeTemplate = ({
                     type="target"
                     position={handle.position}
                     id={`${id}-${handle.id}`}
+                    className='handle left'
                     style={targetHandlesWithStyles[index].style}
                 />
             ))}

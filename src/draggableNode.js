@@ -33,7 +33,7 @@ export const DraggableNode = ({ type, label,icon }) => {
         display: 'flex',
         alignItems: 'center',
         borderRadius: '8px',
-        backgroundColor: '#1C2536',
+        backgroundColor: '#274060',
         justifyContent: 'center',
         flexDirection: 'row',
         padding: '10px',

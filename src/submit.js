@@ -1,6 +1,7 @@
 import React from 'react';
 import { useStore } from './store'; // Make sure the path is correct for your store
 import axios from 'axios';
+import { Button } from '@mui/material';
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000',
@@ -25,7 +26,7 @@ export const SubmitButton = () => {
 
     return (
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <button type="button" onClick={handleSubmit}>Submit</button>
+            <Button variant="contained" style={{width:"30%", minWidth: "100px", fontWeight:"800", backgroundColor:"#1b2845", fontSize:"16px", letterSpacing:"0.3rem"}} onClick={handleSubmit}>Submit</Button>
         </div>
     );
 };

@@ -33,9 +33,7 @@ const saveState = (state) => {
 };
 
 export const useStore = create((set, get) => ({
-  ...loadState,
-  nodes: [],
-  edges: [],
+  ...loadState(),
   getNodeID: (type) => {
     const newIDs = { ...get().nodeIDs };
     if (newIDs[type] === undefined) {

@@ -1,14 +1,17 @@
 // draggableNode.js
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightToBracket, faChartBar, faRightFromBracket, faFileLines } from '@fortawesome/free-solid-svg-icons';
+import { faRightToBracket, faChartBar, faRightFromBracket, faFileLines, faGear } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 
 const iconMapping = {
   'right-to-bracket': faRightToBracket,
   'chart-bar': faChartBar,
   'right-from-bracket': faRightFromBracket,
-  'file-line': faFileLines
+  'file-line': faFileLines,
+  'google': faGoogle,
+  'gear' : faGear,
 };
 
 export const DraggableNode = ({ type, label,icon }) => {

@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import { Handle, Position } from 'reactflow';
 import { useStore } from '../store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Card, CardContent, TextField, MenuItem, IconButton, Typography, Box } from '@mui/material';
 import { shallow } from 'zustand/shallow';
 import "./NodeTemplate.css";
 import { height, width } from '@fortawesome/free-solid-svg-icons/fa0';
 import { faRightToBracket, faChartBar, faRightFromBracket, faFileLines } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 
 const iconMapping = {
   'right-to-bracket': faRightToBracket,
   'chart-bar': faChartBar,
   'right-from-bracket': faRightFromBracket,
-  'file-line': faFileLines
+  'file-line': faFileLines,
+  'google': faGoogle,
+  'gear':faGear,
 };
 
 
@@ -26,14 +29,17 @@ const selector = (state) => ({
     onNodesChange: state.onNodesChange,
     onEdgesChange: state.onEdgesChange,
     onConnect: state.onConnect,
-    onRemoveNode: state.onRemoveNode
+    onRemoveNode: state.onRemoveNode,
+    updateNodeField: state.updateNodeField
 });
 
 const generateHandleStyles = (handles, position) => {
     const step = 100 / (handles.length + 1);
     return handles.map((handle, index) => ({
         ...handle,
-        style: { top: `${(index + 1) * step}%`}
+        style: { top: `${(index + 1) * step}%`,
+        transform: 'scale(2)'
+      }
     }));
 };
 
@@ -47,7 +53,7 @@ const NodeTemplate = ({
     heading,
     subheading,
     icon,
-    children
+    children,
 }) => {
     const {
         nodes,
@@ -57,7 +63,8 @@ const NodeTemplate = ({
         onNodesChange,
         onEdgesChange,
         onConnect,
-        onRemoveNode
+        onRemoveNode,
+        updateNodeField
     } = useStore(selector, shallow);
 
     const [inputValues, setInputValues] = useState(
@@ -74,6 +81,7 @@ const NodeTemplate = ({
             ...inputValues,
             [name]: e.target.value
         });
+        updateNodeField(id,name,e.target.value);
     };
 
     const sourceHandlesWithStyles = generateHandleStyles(sourceHandles, Position.Right);

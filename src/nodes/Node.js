@@ -7,6 +7,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useStore } from '../store';
 import { shallow } from 'zustand/shallow';
 import  addNodeTypes , {nodeTypes}    from '../nodeTypes';
+import icon from '../images/icon.png'; // Path to your icon
 
 // selector to use zustand store
 const selector = (state) => ({
@@ -112,6 +113,7 @@ export const TextNode = (props) => {
     const [text, setText] = useState(props.data?.text || '');
     const [handles, setHandles] = useState([]);
     const [nodeDimensions, setNodeDimensions] = useState({ width: 200, height: 80 });
+    const [inputVariables, setInputVariables] = useState([]);
 
 
     // Extract variables from text and update handles
@@ -131,11 +133,24 @@ export const TextNode = (props) => {
         }
 
         setHandles(foundHandles);
-        console.log("lkaskfdj",handles)
     }, [text]);
 
     const handleTextChange = (e) => {
         setText(e.target.value);
+    };
+
+    // Function to replace placeholders with custom representation
+    const getVariables = (content) => {
+        const regex = /{{\s*([\w]+)\s*}}/g;
+        const parts = [];
+        let match;
+
+        while ((match = regex.exec(text)) !== null) {
+            // match[1] contains the variable name without the curly braces
+            parts.push(`${match[1]}, `);
+        }
+        console.log(parts,"parts");
+        return parts;
     };
 
     return (
@@ -146,21 +161,26 @@ export const TextNode = (props) => {
             subheading="Handles text input"
             description="This node allows text input and dynamic variable creation."
             sourceHandles={[
-                {id:`${props.id}-output`, type:"source",position:Position.Right}
+                { id: `${props.id}-output`, type: "source", position: Position.Right }
             ]}
-            targetHandles={[
-                ...handles,
-            ]}
+            targetHandles={handles}
             style={{ width: nodeDimensions.width, height: nodeDimensions.height }}
             icon="file-line"
         >
-            <TextareaAutosize
-                value={text}
-                onChange={handleTextChange}
-                minRows={3}
-                style={{ width: '100%', boxSizing: 'border-box' }}
-            />
+            <div>
+                <TextareaAutosize
+                    value={text}
+                    onChange={handleTextChange}
+                    minRows={3}
+                    style={{ width: '100%', boxSizing: 'border-box' , border:' 1px solid grey', borderRadius:'4px'}}
+                />
+                <span>Variable Names:</span>
+                <div
+                    className="variable-display"
+                    style={{ marginTop: '2px', whiteSpace: 'pre-wrap' }}
+                    dangerouslySetInnerHTML={{ __html: getVariables(text).map(part => typeof part === 'string' ? part : part.props.children).join('') }}
+                />
+            </div>
         </NodeTemplate>
     );
 };
-

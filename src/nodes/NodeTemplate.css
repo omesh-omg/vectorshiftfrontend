@@ -47,15 +47,15 @@ NodeTemplate.css
 .custom-dropdown select:hover {
   border-color: #007bff;
 }
-.handle {
+/* .handle {
   width: 14px;
   height: 30px;
   border-radius: 4px;
   background-color: #784be8;
 }
 .handle :left{
-  left: -30px
+  left: -50px
 }
 .handle :right{
-  right: -30px
-}
+  right: -50px
+} */

@@ -56,22 +56,22 @@ export const SubmitButton = () => {
           
 
         <Box sx={{ padding: 5 ,display:'flex', flexDirection:'row'}}>
-          <Paper elevation={3} sx={{ minWidth:"100px", minHeight:"180px",padding: 2, margin:2, textAlign: 'center',height:"90%"  }}>
-            <img src={nodeIcon} alt="Nodes" style={{ width: '50px' }} />
+          <div style={{ minWidth:"100px", minHeight:"180px", textAlign: 'center',height:"90%",display:'flex',flexDirection:'column',alignContent:'center', margin:'4px' , boxShadow:'2px 2px  #efefef ', padding:'4px', borderRadius:'4px' }}>
+            <img src={nodeIcon} alt="Nodes" style={{ width: '50px',height:'50px' ,margin:'auto'}} />
             <Typography variant="h6">Number of Nodes</Typography>
             <Typography variant="h4">{numNodes}</Typography>
-          </Paper>
-          <Paper elevation={3} sx={{ minWidth:"100px", minHeight:"180px",padding: 2, margin:2, textAlign: 'center' ,height:"90%"}}>
-            <img src={edgeIcon} alt="Edges" style={{ width: '50px' }} />
+          </div>
+          <div  style={{ minWidth:"100px", minHeight:"180px", textAlign: 'center' ,height:"90%", display:'flex',flexDirection:'column',alignContent:'center',margin:'4px' , boxShadow:'2px 2px  #efefef ', padding:'4px', borderRadius:'4px' }}>
+            <img src={edgeIcon} alt="Edges" style={{ width: '50px', height:'50px',margin:'auto' }} />
             <Typography variant="h6">Number of Edges</Typography>
             <Typography variant="h4">{numEdges}</Typography>
-          </Paper>
-          <Paper elevation={3} sx={{  minWidth:"100px", minHeight:"180px",padding: 2, margin:2, textAlign: 'center',height:"90%",justifyContent:"space-acround" }}>
-            <img src={dagIcon} alt={isDag ? 'Acyclic' : 'Cyclic'} style={{ width: '50px' }} />
-            <Typography variant="h6">Is DAG?</Typography>
-            <Typography style={{visibility:"hidden"}}variant="h6">(DAG )</Typography>
+          </div>
+          <div  style={{  minWidth:"150px", minHeight:"180px", textAlign: 'center',height:"90%",justifyContent:"space-around",display:'flex',flexDirection:'column',alignContent:'center' ,margin:'4px' , boxShadow:'2px 2px  #efefef ', padding:'4px', borderRadius:'4px' }}>
+            <img src={dagIcon} alt={isDag ? 'Acyclic' : 'Cyclic'} style={{ width: '50px' ,margin:'auto'}} />
+            <Typography variant="h6" style={{padding:4}}>Is DAG?</Typography>
+            {/* <Typography style={{visibility:"hidden"}}variant="h6">(DAG )</Typography> */}
             <Typography variant="h4">{isDag ? 'Yes' : 'No'}</Typography>
-          </Paper>
+          </div>
     </Box>
 
 

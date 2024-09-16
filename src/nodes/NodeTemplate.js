@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
-import { Handle, Position } from 'reactflow';
+import React, { useState, useEffect } from 'react';
+import { Handle, Position, useUpdateNodeInternals } from 'reactflow';
 import { useStore } from '../store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Card, CardContent, TextField, MenuItem, IconButton, Typography, Box } from '@mui/material';
 import { shallow } from 'zustand/shallow';
 import "./NodeTemplate.css";
-import { height, width } from '@fortawesome/free-solid-svg-icons/fa0';
 import { faRightToBracket, faChartBar, faRightFromBracket, faFileLines } from '@fortawesome/free-solid-svg-icons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-
 
 const iconMapping = {
   'right-to-bracket': faRightToBracket,
@@ -17,9 +15,8 @@ const iconMapping = {
   'right-from-bracket': faRightFromBracket,
   'file-line': faFileLines,
   'google': faGoogle,
-  'gear':faGear,
+  'gear': faGear,
 };
-
 
 const selector = (state) => ({
     nodes: state.nodes,
@@ -74,19 +71,24 @@ const NodeTemplate = ({
         }, {})
     );
 
-    const selectedIcon= iconMapping[icon];
+    const selectedIcon = iconMapping[icon];
+    const updateNodeInternals = useUpdateNodeInternals();
 
     const handleInputChange = (e, name) => {
         setInputValues({
             ...inputValues,
             [name]: e.target.value
         });
-        updateNodeField(id,name,e.target.value);
+        updateNodeField(id, name, e.target.value);
     };
 
     const sourceHandlesWithStyles = generateHandleStyles(sourceHandles, Position.Right);
     const targetHandlesWithStyles = generateHandleStyles(targetHandles, Position.Left);
-    console.log(selectedIcon,"selectedicon");
+
+    useEffect(() => {
+        updateNodeInternals(id);
+    }, [id, sourceHandles, targetHandles, updateNodeInternals]);
+
     return (
         <Card
             sx={{
@@ -95,25 +97,23 @@ const NodeTemplate = ({
                 boxShadow: 3,
                 padding: 2,
                 position: 'relative',
-                // backgroundColor: '#fffff',
                 overflow: 'visible',
-
-
             }}
             className='custom-drag-handle'
-            
-            
         >
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={1} className="custom-drag-handle" 
-              onDragStart={(e) => e.target.style.cursor = 'grabbing'}
-              onDragEnd={(e) => e.target.style.cursor = 'grab'}
-              >
-                
-                <Typography variant="h6"  sx={{ color: '#1b2845',letterSpacing:"0.15rem", fontWeight: "800"  }}>
-                <FontAwesomeIcon icon={selectedIcon} style={{ color: '#1b2845', marginRight: '10px' }} />                 
+            <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                mb={1}
+                className="custom-drag-handle"
+                onDragStart={(e) => e.target.style.cursor = 'grabbing'}
+                onDragEnd={(e) => e.target.style.cursor = 'grab'}
+            >
+                <Typography variant="h6" sx={{ color: '#1b2845', letterSpacing: "0.15rem", fontWeight: "800" }}>
+                    <FontAwesomeIcon icon={selectedIcon} style={{ color: '#1b2845', marginRight: '10px' }} />
                     {heading}
                 </Typography>
-                
                 <IconButton
                     sx={{ color: '#1b2845' }}
                     onClick={() => onRemoveNode(id)}
@@ -136,16 +136,16 @@ const NodeTemplate = ({
                     <Box key={index} mb={1}>
                         <Typography variant="body2">{field.label}:</Typography>
                         {field.type === 'select' ? (
-                            <select 
-                            style={{width:"100%", height:"48px" , fontSize:"16px", backgroundColor:"#ffffff", border:"1px #999999 solid", borderRadius:"4px"}}
-                            className="node-template-select"
-                            value={inputValues[field.name]} 
-                            onChange={(e) => handleInputChange(e, field.name)}
-                        >
-                            {field.options.map((option, optIndex) => (
-                                <option key={optIndex}  style={{width:"100%", height:"48px" , fontSize:"16px"}} value={option}>{option}</option>
-                            ))}
-                        </select>
+                            <select
+                                style={{ width: "100%", height: "48px", fontSize: "16px", backgroundColor: "#ffffff", border: "1px #999999 solid", borderRadius: "4px" }}
+                                className="node-template-select"
+                                value={inputValues[field.name]}
+                                onChange={(e) => handleInputChange(e, field.name)}
+                            >
+                                {field.options.map((option, optIndex) => (
+                                    <option key={optIndex} style={{ width: "100%", height: "48px", fontSize: "16px" }} value={option}>{option}</option>
+                                ))}
+                            </select>
                         ) : (
                             <TextField
                                 type={field.type}

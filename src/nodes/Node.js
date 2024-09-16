@@ -30,12 +30,14 @@ const targetHandleConfigOutputNode = [
 
 ];
 const sourceHandleConfigLLMNode = [
-    { position: Position.Right, id: 'output' },
+    { position: Position.Right, id: 'output' }, 
+    
 ];
 
 const targetHandleConfigLLMNode = [
     { position: Position.Left, id: 'input1' },
     { position: Position.Left, id: 'input2' },
+       
 ];
 const inputFieldConfigLLMNode = [
     { name: 'inputSystem', label: 'System', type: 'text' },
@@ -107,14 +109,13 @@ export const LLMNode = (props) => (
 //     />
 //   );
 
-
+// const [handlesText, setHandlesText] = useState([{position:Position.Right, id:'something'}]);
 
 export const TextNode = (props) => {
     const [text, setText] = useState(props.data?.text || '');
     const [handles, setHandles] = useState([]);
     const [nodeDimensions, setNodeDimensions] = useState({ width: 200, height: 80 });
     const [inputVariables, setInputVariables] = useState([]);
-
 
     // Extract variables from text and update handles
     useEffect(() => {
@@ -139,14 +140,13 @@ export const TextNode = (props) => {
         setText(e.target.value);
     };
 
-    // Function to replace placeholders with custom representation
+    
     const getVariables = (content) => {
         const regex = /{{\s*([\w]+)\s*}}/g;
         const parts = [];
         let match;
 
         while ((match = regex.exec(text)) !== null) {
-            // match[1] contains the variable name without the curly braces
             parts.push(`${match[1]}, `);
         }
         console.log(parts,"parts");

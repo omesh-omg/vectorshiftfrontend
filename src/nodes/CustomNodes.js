@@ -1,25 +1,8 @@
 // Nodes.js
 import React from 'react';
-import { useState, useRef, useEffect } from 'react';
 import NodeTemplate from './NodeTemplate';
-import { Handle, Position } from 'reactflow';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { useStore } from '../store';
-import { shallow } from 'zustand/shallow';
-import addNodeTypes, { nodeTypes } from '../nodeTypes';
-import icon from '../images/icon.png'; // Path to your icon
+import { Position } from 'reactflow';
 
-// selector to use zustand store
-const selector = (state) => ({
-    nodes: state.nodes,
-    edges: state.edges,
-    getNodeID: state.getNodeID,
-    addNode: state.addNode,
-    onNodesChange: state.onNodesChange,
-    onEdgesChange: state.onEdgesChange,
-    onConnect: state.onConnect,
-});
-// nodes using the NodeTemplate demonstrating abstraction
 
 const sourceHandleConfigInputNode = [
     { position: Position.Right, id: 'output' },

@@ -3,7 +3,6 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
 import { useStore } from './store';
 import { shallow } from 'zustand/shallow';
-import NodeTemplate from './nodes/NodeTemplate';
 import nodeTypes from './nodeTypes';
 import { Box, Tabs, Tab, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -167,7 +166,7 @@ export const PipelineUI = () => {
             snapGrid={[gridSize, gridSize]}
             connectionLineType='smoothstep'
           >
-            <Background color="#aaa" gap={gridSize} />
+            <Background color="#ccc" gap={gridSize}  />
             <Controls />
             <MiniMap />
           </ReactFlow>

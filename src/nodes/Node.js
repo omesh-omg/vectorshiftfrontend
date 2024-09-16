@@ -2,12 +2,8 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import NodeTemplate from './NodeTemplate';
-import { Handle, Position } from 'reactflow';
+import { Position } from 'reactflow';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { useStore } from '../store';
-import { shallow } from 'zustand/shallow';
-import  addNodeTypes , {nodeTypes}    from '../nodeTypes';
-import icon from '../images/icon.png'; // Path to your icon
 
 // selector to use zustand store
 const selector = (state) => ({
